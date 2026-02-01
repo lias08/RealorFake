@@ -1,18 +1,18 @@
 import discord
 import requests
 from bs4 import BeautifulSoup
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # Umgebungsvariablen aus der .env-Datei laden (lokal)
 import os
 
-# Lade Umgebungsvariablen aus .env
+# Lade die Umgebungsvariablen aus der .env-Datei (für lokale Entwicklung)
 load_dotenv()
 
-# Bot Token aus der Umgebungsvariablen
+# Hole den Token aus der Umgebungsvariablen (in Railway wird er automatisch bereitgestellt)
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 # Bot Client erstellen
 intents = discord.Intents.default()
-intents.message_content = True  # Berechtigung für das Lesen von Nachrichten
+intents.message_content = True  # Berechtigung zum Lesen von Nachrichten
 
 client = discord.Client(intents=intents)
 
@@ -48,7 +48,7 @@ async def on_message(message):
 
     # Befehl zum Überprüfen von Vinted-Artikeln nur für bestimmte Rollen
     if message.content.startswith("!check"):
-        role_name = "Verifizierte Rolle"  # Hier den Namen der Rolle eintragen
+        role_name = "Premium"  # Hier den Namen der Rolle eintragen
         if any(role.name == role_name for role in message.author.roles):
             url = message.content.split(" ")[1]  # URL extrahieren
             result = check_article(url)  # Artikel prüfen
